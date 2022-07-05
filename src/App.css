@@ -1,38 +1,62 @@
-.App {
-  text-align: center;
+:root {
+  --textColor: rgb(65, 64, 66);
+  --btnbgColor: #3287b7;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html {
+  scroll-behavior: smooth;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+  font-family: "Neutrif Pro";
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* ---------------Login--------------- */
+.phone-container {
+  padding: 3em 1.7em;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 100vh;
+  background-color: #f2f0e4;
+  position: relative;
 }
 
-.App-link {
-  color: #61dafb;
+.phone-container h1 {
+  font-size: 1.3em;
+  font-weight: 500;
+  font-style: normal;
+  margin-bottom: 0;
+  color: var(--textColor);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.phone-container p {
+  font-size: 0.755em;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+  width: 100%;
+  max-width: 270px;
+  text-align: center;
+  justify-content: space-evenly
+}
+
+.phone-container p span {
+  font-weight: 500;
+}
+
+.nav-wrap{
+  display: flex;
+  background-color: rgb(77, 77, 77);
+  width: 240px;
+  height: 90vh;
+  justify-content: space-evenly;
+}
+.main-nav{
+  display: flex;
+  justify-content:space-evenly;
 }
