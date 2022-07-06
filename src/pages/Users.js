@@ -28,6 +28,7 @@ function Users() {
           },
         });
         setUserData(listData.data);
+        console.log(listData.data)
       } catch (error) {
         toast.error("Something went wrong", toastOptions);
       }
