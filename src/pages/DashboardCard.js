@@ -11,7 +11,7 @@ function DashboardCard(props) {
                 </div>
                
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <Link to={props.card.link1?"/users":props.card.link2?"/hotels":props.card.link3?"/rooms":null} class="small text-white stretched-link">View Details</Link> 
+                    <Link to={props.card.link1?"/users":props.card.link2?"/product":props.card.link3?"/rooms":null} class="small text-white stretched-link">View Details</Link> 
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>

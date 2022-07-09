@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import Navbar from './Navbar';
+import Navbar from './Navbar'
 
-function ViewUser() {
+function ViewModel() {
     function fetch() {
         if (!localStorage.getItem("myapptoken")) {
             navigate("/");
@@ -14,7 +14,7 @@ function ViewUser() {
     const [user, setUserData] = useState([]);
     useEffect(() => {
         async function fetchData() {
-          let user = await axios.get(`http://localhost:8080/user/${params.id}`,
+          let user = await axios.get(`http://localhost:8080/getProduct/${params.id}`,
           {
             headers: {
               Authorization: window.localStorage.getItem('myapptoken'),
@@ -35,20 +35,22 @@ function ViewUser() {
                 <div className="container">
                     <div className="row">
                         <div className="col-6">
-                            <h3 class="card-title">Users Details</h3>
-                            <p class="card-text">Name:<strong>{user.name}</strong></p>
-                            <p class="card-text">Mobile:<strong>{user.mobile}</strong></p>
-                            <p class="card-text">Email:<strong>{user.email}</strong></p>
+                            <h3 class="card-title">Model Details</h3>
+                            <p class="card-text">Name:<strong>{user.title}</strong></p>
+                            <p class="card-text">Mobile:<strong>{user.model}</strong></p>
+                            <p class="card-text">Price:<strong>{user.price}</strong></p>
+                            <p class="card-text">OfferPrice:<strong>{user.offerPrice}</strong></p>
                             <div className="col-lg-6 mt-3">
                                 <input
                                     type={"submit"}
                                     value="Close"
-                                    onClick={() => navigate("/users", { replace: true })}
+                                    onClick={() => navigate("/view/mobile", { replace: true })}
                                     className="btn btn-primary"
                                 />
                             </div>
                         </div>
                         <div className="col-6">
+                            <img src={user.img} className="img-fluid"/>
                         </div>
                     </div>
                 </div>
@@ -59,4 +61,4 @@ function ViewUser() {
   )
 }
 
-export default ViewUser
+export default ViewModel

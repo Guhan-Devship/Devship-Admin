@@ -20,6 +20,11 @@ function Dashboard() {
             color1:true,
             link1:true
         },
+        {
+            title:"Products",
+            color2:true,
+            link2:true
+        },
     ]
     return (
         <>
