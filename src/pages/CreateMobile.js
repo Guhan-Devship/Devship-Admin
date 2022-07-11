@@ -60,7 +60,12 @@ function CreateMobile() {
 
       const data = await axios.post(
         "http://localhost:8080/createProduct",
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: window.localStorage.getItem("myapptoken"),
+          },
+        }
       );
 
       if (data.data.message !== "created") {
