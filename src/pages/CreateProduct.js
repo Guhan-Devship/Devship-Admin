@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { useObjectUrl } from "../useObjectUrl";
 import Navbar from "./Navbar";
 
 function CreateProduct() {
@@ -21,10 +22,18 @@ function CreateProduct() {
     draggable: true,
     theme: "dark",
   };
+
   const [credentials, setCredentials] = useState({
     title: undefined,
-    image: undefined,
+    image: null,
   });
+
+  const {
+    objectURL: imagePreviewUrl,
+    setObject: setImage,
+    object: image,
+  } = useObjectUrl();
+
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
@@ -32,22 +41,24 @@ function CreateProduct() {
     e.preventDefault();
     if (handleValidation()) {
       const { title, image } = credentials;
+      const formData = new FormData();
+
+      Object.entries(credentials).forEach(([key, value]) =>
+        formData.append(key, value)
+      );
       const data = await axios.post(
         "http://localhost:8080/createNew",
-        {
-          title,
-          image,
-        },
+        formData,
         {
           headers: {
             Authorization: window.localStorage.getItem("myapptoken"),
           },
         }
       );
-      if (data.data.status !== true) {
+      if (data.data.message !== "created") {
         toast.error(data.data.message, toastOptions);
       }
-      if (data.data.status === true) {
+      if (data.data.message === "created") {
         toast.success("SuccessFully Created", toastOptions);
         navigate("/product");
       }
@@ -63,6 +74,18 @@ function CreateProduct() {
       return false;
     }
     return true;
+  };
+
+  const handleFileChange = (e) => {
+    const [file] = e.target.files;
+
+    if (!file || !file.type.startsWith("image/")) {
+      alert("Invalid file format");
+      return;
+    }
+
+    setCredentials({ ...credentials, image: file });
+    setImage(file);
   };
   return (
     <>
@@ -85,12 +108,18 @@ function CreateProduct() {
                 />
               </div>
               <div className="form-group col-sm-12 col-md-4 col-lg-6 col-xl-6 col-xxl-6 ">
-                <label for="myfile">Select a file:</label>
+                {imagePreviewUrl && (
+                  <img
+                    src={imagePreviewUrl}
+                    className="img-fluid preview-img"
+                  />
+                )}
                 <input
                   type="file"
                   className="form-control"
                   name="myImage"
                   accept="image/*"
+                  onChange={handleFileChange}
                 />
               </div>
               <div className="col-4 mt-5 ms-2">
