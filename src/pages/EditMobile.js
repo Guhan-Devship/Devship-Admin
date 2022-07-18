@@ -26,6 +26,7 @@ function EditMobile() {
     category: "",
     price: "",
     offerPrice: "",
+    stockAvailability: "",
   });
   const handleChange = (e) => {
     const id = e.target.id;
@@ -54,6 +55,7 @@ function EditMobile() {
           category: editdata.data.category,
           price: editdata.data.price,
           offerPrice: editdata.data.offerPrice,
+          stockAvailability: editdata.data.stockAvailability,
         });
       } catch (error) {
         console.log(error);
@@ -89,6 +91,16 @@ function EditMobile() {
         <div className="card-body">
           <form>
             <div className="row user-row">
+              <div className="form-group col-sm-12 col-md-4 col-lg-6 col-xl-6 col-xxl-6 mb-5">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="stockAvailability"
+                  id="stockAvailability"
+                  value={credentials.stockAvailability}
+                  onChange={handleChange}
+                />
+              </div>
               <div className="form-group col-sm-12 col-md-4 col-lg-6 col-xl-6 col-xxl-6 mb-5">
                 <input
                   type="text"

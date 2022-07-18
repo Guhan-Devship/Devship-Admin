@@ -43,7 +43,9 @@ function Order() {
               <thead>
                 <tr>
                   <th>Title</th>
+                  <th>Qty</th>
                   <th>Price</th>
+                  <th>Total &#x20b9;</th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -52,7 +54,9 @@ function Order() {
                   return (
                     <tr>
                       <td>{data.title}</td>
-                      <td>{data.offerPrice}</td>
+                      <td>{data.quantity}</td>
+                      <td>&#x20b9;{data.offerPrice}</td>
+                      <td>&#x20b9;{data.offerPrice * data.quantity}</td>
                       <td>
                         <button className="btn btn-outline-primary btn-sm ms-2">
                           View
