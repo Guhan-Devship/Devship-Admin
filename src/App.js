@@ -15,6 +15,7 @@ import CreateMobile from "./pages/CreateMobile";
 import ViewModel from "./pages/ViewModel";
 import EditMobile from "./pages/EditMobile";
 import Order from "./pages/Order/Order";
+import OrderView from "./pages/Order/OrderView";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/createMobile" element={<CreateMobile />} />
         <Route path="/viewModel/:id" element={<ViewModel />} />
         <Route path="/editModel/:id" element={<EditMobile />} />
+        <Route path="/viewOrder/:id" element={<OrderView />} />
       </Routes>
     </BrowserRouter>
   );

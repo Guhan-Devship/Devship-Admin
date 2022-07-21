@@ -2,8 +2,16 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../Navbar";
+import { ToastContainer, toast } from "react-toastify";
 
 function Order() {
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnHover: true,
+    draggable: true,
+    theme: "dark",
+  };
   const [order, setOrder] = useState([]);
   async function fetchAll() {
     try {
@@ -21,6 +29,25 @@ function Order() {
   useEffect(() => {
     fetchAll();
   }, []);
+
+  let handleDelete = async (id) => {
+    try {
+      let ask = window.confirm(
+        "Are you sure, do you want to delete this Order?"
+      );
+      if (ask) {
+        await axios.delete(`http://localhost:8080/deleteOrder/${id}`, {
+          headers: {
+            Authorization: window.localStorage.getItem("myapptoken"),
+          },
+        });
+        toast.success("Removed", toastOptions);
+        fetchAll();
+      }
+    } catch (error) {
+      alert("Something went wrong");
+    }
+  };
   return (
     <>
       <Navbar />
@@ -58,8 +85,16 @@ function Order() {
                       <td>&#x20b9;{data.offerPrice}</td>
                       <td>&#x20b9;{data.offerPrice * data.quantity}</td>
                       <td>
-                        <button className="btn btn-outline-primary btn-sm ms-2">
-                          View
+                        <Link to={`/viewOrder/${data._id}`}>
+                          <button className="btn btn-outline-primary btn-sm ms-2">
+                            View
+                          </button>
+                        </Link>
+                        <button
+                          className="btn btn-outline-danger btn-sm ms-2"
+                          onClick={() => handleDelete(data._id)}
+                        >
+                          Delete
                         </button>
                       </td>
                     </tr>
@@ -72,6 +107,7 @@ function Order() {
         <Link to={"/home"}>
           <button className="btn btn-primary btn-sm m-4">Back</button>
         </Link>
+        <ToastContainer />
       </div>
     </>
   );
