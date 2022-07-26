@@ -26,7 +26,9 @@ function DashboardCard(props) {
                 ? "/product"
                 : props.card.link3
                 ? "/order"
-                : null
+                : props.card.link4
+                ? "/admin"
+                : ""
             }
             class="small text-white stretched-link"
           >

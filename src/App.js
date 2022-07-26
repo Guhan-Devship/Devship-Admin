@@ -16,6 +16,7 @@ import ViewModel from "./pages/ViewModel";
 import EditMobile from "./pages/EditMobile";
 import Order from "./pages/Order/Order";
 import OrderView from "./pages/Order/OrderView";
+import Admin from "./pages/Admin/Admin";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/view-user/:id" element={<ViewUser />} />
         <Route path="/product" element={<Products />} />
         <Route path="/order" element={<Order />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/createProduct" element={<CreateProduct />} />
         <Route path="/view/:id" element={<ViewProduct />} />
         <Route path="/createMobile" element={<CreateMobile />} />
