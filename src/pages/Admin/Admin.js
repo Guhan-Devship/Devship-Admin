@@ -44,14 +44,15 @@ function Admin() {
   //submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (handleValidation()) {
-      console.log(inputFields);
-      for (const input of inputFields) {
-        const formdata = new FormData();
-        formdata.append("Name", input.Name);
-        formdata.append("Url", input.Url);
-        formdata.append("image", input.image);
-        formdata.append("Active", input.Active);
+
+    console.log(inputFields);
+    for (const input of inputFields) {
+      const formdata = new FormData();
+      formdata.append("Name", input.Name);
+      formdata.append("Url", input.Url);
+      formdata.append("image", input.image);
+      formdata.append("Active", input.Active);
+      if (handleValidation()) {
         const data = await axios.post(
           "http://localhost:8080/createMember",
           formdata,
@@ -74,8 +75,11 @@ function Admin() {
     }
   };
   //validation
+
   const handleValidation = () => {
-    const [{ Name, Url, Active }] = inputFields;
+    const [{ Name, Url, Active, image }] = inputFields;
+    const regExq =
+      /^(https:\/\/www\.|http:\/\/www\.|www\.)[a-zA-Z0-9\-_$]+\.[a-zA-Z]{2,5}$/g;
     if (Name.length < 3) {
       toast.error(
         "Username should be greater than 3 characters.",
@@ -85,10 +89,13 @@ function Admin() {
     } else if (Url === "") {
       toast.error("Url is required.", toastOptions);
       return false;
+    } else if (image === null) {
+      toast.error("image Required", toastOptions);
+      return false;
     } else if (Active === "") {
       toast.error("Active is required.", toastOptions);
       return false;
-    } else if (!isWebUri(Url)) {
+    } else if (!Url.match(regExq)) {
       toast.error("InValid Url", toastOptions);
       return false;
     }
@@ -141,7 +148,7 @@ function Admin() {
     e.preventDefault();
     try {
       let ask = window.confirm(
-        "Are you sure, do you want to delete this User?"
+        "Are you sure, do you want to delete this member?"
       );
       if (ask) {
         await axios.delete(`http://localhost:8080/deleteMember/${id}`, {
@@ -165,7 +172,7 @@ function Admin() {
   };
   //update validation
   const handleUpdateValidation = () => {
-    const [{ Name, Url, Active }] = memberData;
+    const [{ Name, Url, Active, image }] = memberData;
     if (Name.length < 3) {
       toast.error(
         "Username should be greater than 3 characters.",
@@ -189,20 +196,22 @@ function Admin() {
     e.preventDefault();
     for (let i = 0; i <= memberData.length; i++) {
       if (handleUpdateValidation()) {
-        const updateData = await axios
-          .put(`http://localhost:8080/updateMember/${id}`, memberData[i], {
-            headers: {
-              Authorization: window.localStorage.getItem("myapptoken"),
-            },
-          })
-          .then((res) => {
-            toast.success("Updated", toastOptions);
-            fetchAll();
-            window.location.reload();
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        if (memberData[i]._id === id) {
+          const updateData = await axios
+            .put(`http://localhost:8080/updateMember/${id}`, memberData[i], {
+              headers: {
+                Authorization: window.localStorage.getItem("myapptoken"),
+              },
+            })
+            .then((res) => {
+              toast.success("Updated", toastOptions);
+              fetchAll();
+              window.location.reload();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       }
     }
   };
@@ -316,6 +325,7 @@ function Admin() {
                   name="Active"
                   onChange={(event) => handleChangeInput(index, event)}
                 >
+                  <option></option>
                   <option value={false}>No</option>
                   <option value={true}>Yes</option>
                 </select>
